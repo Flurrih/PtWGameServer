@@ -29,6 +29,7 @@ namespace PtWGameServer
             server.Start();
             onlinePlayers.AppendText("id:username");
             onlinePlayers.IsReadOnly = true;
+            logger.IsReadOnly = true;
         }
         
         private bool _autoScroll = true;
