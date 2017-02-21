@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PtWGameServer.ServerPackets.PacketManagers
@@ -30,11 +31,12 @@ namespace PtWGameServer.ServerPackets.PacketManagers
                             CommandLine.WriteLine("Client authorized");
                             PlayerData player = new PlayerData(Server.GetClientSocket(token).clientSocket);
                             db.FillPlayerData(login, player);
-                            client.SendLoginAuthorizationPacket();
-
+                            Thread th1 = new Thread(client.SendLoginAuthorizationPacket);
+                            th1.Start();
                             Server.AddNewPlayer(player);
                             CommandLine.WriteLine("New player logged in with ID: " + player.id + "username: " + player.userName);
-                            player.SendPlayerData();
+                            Thread th2 = new Thread(player.SendPlayerData);
+                            th2.Start();
                         }
                         else
                         {

@@ -17,6 +17,7 @@ namespace PtWGameServer.Player
             pw.Write(id);
             pw.Write(userName);
             playerSocket.Send(pw.GetBytes());
+            CommandLine.WriteLine("Sent Player Data packet");
         }
     }
 }

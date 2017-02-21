@@ -29,6 +29,7 @@ namespace PtWGameServer.Client
             pw.Write((ushort)Headers.Connection);
             pw.Write(token);
             clientSocket.Send(pw.GetBytes());
+            CommandLine.WriteLine("Sent connection packet");
         }
     }
 }
