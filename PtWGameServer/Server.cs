@@ -1,6 +1,7 @@
 ﻿using PtWGameServer.Client;
+using PtWGameServer.Networking;
 using PtWGameServer.Player;
-using PtWGameServer.ServerPackets.PacketManagers;
+using SocksLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,97 +15,26 @@ namespace PtWGameServer
 {
     public class Server
     {
-        static Socket listenerSocket;
-        static List<ClientData> _clients;
-        static List<PlayerData> _players;
-
-
-        public void Start()
+        public Dictionary<string, Socket> _clients { get; private set; }
+        public static ServerSocket ServerSocket;
+        public bool isRunning { get; private set; }
+        public Server()
         {
-            CommandLine.Write("[" + DateTime.Now + "] "+"Starting server on " + GetIPAddress());
-            listenerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            _clients = new List<ClientData>();
-            _players = new List<PlayerData>();
-            IPEndPoint ip = new IPEndPoint(IPAddress.Parse(GetIPAddress()), 8888);
+            isRunning = false;
+            _clients = new Dictionary<string, Socket>();
+            ServerSocket = new ServerSocket(this);
+            ServerSocket.Bind(6556);
+            ServerSocket.Listen(500);
+            ServerSocket.Accept();
 
-            listenerSocket.Bind(ip);
-
-            Thread listenThread = new Thread(ListenThread);
-            listenThread.Start();
-            CommandLine.WriteLine("Server started");
+            if (ServerSocket._socket.Connected)
+                isRunning = true;
         }
 
-        static void ListenThread()
+        public void AddNewClient(string token, Socket socket)
         {
-            for (;;)
-            {
-                listenerSocket.Listen(0);
-
-                _clients.Add(new ClientData(listenerSocket.Accept()));
-                CommandLine.WriteLine("New Client connected");
-            }
-        }
-
-        //clientData thread - receives data from each client individually
-        public static void Data_IN(object cSocket)
-        {
-            Socket clientSocket = (Socket)cSocket;
-
-            byte[] Buffer = new byte[512];
-            int readBytes;
-
-            for (;;)
-            {
-
-                try
-                {
-                    Buffer = new byte[clientSocket.SendBufferSize];
-
-                    readBytes = clientSocket.Receive(Buffer);
-
-                    if (readBytes > 0)
-                    {
-                        PacketManager.Unpack(Buffer, _clients[0]);
-                    }
-                }
-                catch (SocketException ex)
-                {
-                    CommandLine.WriteLine("Client disconnected");
-                }
-            }
-        }
-
-
-        public static string GetIPAddress()
-        {
-            IPAddress[] ips = Dns.GetHostAddresses(Dns.GetHostName());
-
-            foreach (IPAddress i in ips)
-            {
-                if (i.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                    return i.ToString();
-            }
-
-            return "127.0.0.1";
-        }
-        public static void AddNewPlayer(PlayerData player)
-        {
-            _players.Add(player);
-            System.Windows.Application.Current.Dispatcher.Invoke(() =>
-            {
-                ((MainWindow)System.Windows.Application.Current.MainWindow).onlinePlayers.AppendText(Environment.NewLine + player.id + ":" + player.userName);
-            });
-        }
-        public static ClientData GetClientSocket(string token)
-        {
-            foreach (ClientData c in _clients)
-            {
-                if (c.token == token)
-                {
-                    return c;
-                }
-            }
-            return null;
+            _clients.Add(token, socket);
+            CommandLine.WriteLine("New client added to list");
         }
     }
 }

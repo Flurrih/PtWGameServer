@@ -16,17 +16,17 @@ namespace PtWGameServer.Player
         public string userName;
         public PlayerData(Socket playerSocket)
         {
-            this.playerSocket = playerSocket;
-            playerThread = new Thread(Server.Data_IN);
-            playerThread.Start(playerSocket);
+            //this.playerSocket = playerSocket;
+            //playerThread = new Thread(Server.Data_IN);
+            //playerThread.Start(playerSocket);
         }
         public PlayerData(Socket playerSocket, int id, string userName)
         {
-            this.playerSocket = playerSocket;
-            this.id = id;
-            this.userName = userName;
-            playerThread = new Thread(Server.Data_IN);
-            playerThread.Start(playerSocket);
+            //this.playerSocket = playerSocket;
+            //this.id = id;
+            //this.userName = userName;
+            //playerThread = new Thread(Server.Data_IN);
+            //playerThread.Start(playerSocket);
         }
     }
 }

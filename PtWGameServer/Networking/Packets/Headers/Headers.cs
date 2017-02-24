@@ -6,22 +6,16 @@ using System.Threading.Tasks;
 
 namespace PtWGameServer
 {
-    public enum Headers : ushort
+    enum Header : ushort
     {
+        Init,
         Login,
-        Registration,
-        Connection,
-        Player
+        Chat
     }
 
-    public enum LoginHeader : ushort
+    enum LoginHeader : ushort
     {
         Authorization,
         NonAuthorization
-    }
-
-    public enum PlayerHeader : ushort
-    {
-        BasicData
     }
 }

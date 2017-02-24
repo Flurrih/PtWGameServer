@@ -26,7 +26,9 @@ namespace PtWGameServer
         {
             InitializeComponent();
             Server server = new Server();
-            server.Start();
+            if (server.isRunning)
+                CommandLine.WriteLine("Server is running");
+
             onlinePlayers.AppendText("id:username");
             onlinePlayers.IsReadOnly = true;
             logger.IsReadOnly = true;

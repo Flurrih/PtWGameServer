@@ -62,11 +62,11 @@ namespace PtWGameServer.Database
                 switch (ex.Number)
                 {
                     case 0:
-                        Console.WriteLine("Cannot connect to server.  Contact administrator");
+                        CommandLine.WriteLine("Cannot connect to server.  Contact administrator");
                         break;
 
                     case 1045:
-                        Console.WriteLine("Invalid username/password, please try again");
+                        CommandLine.WriteLine("Invalid username/password, please try again");
                         break;
                 }
                 return false;
@@ -83,7 +83,7 @@ namespace PtWGameServer.Database
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine(ex.Message);
+                CommandLine.WriteLine(ex.Message);
                 return false;
             }
         }

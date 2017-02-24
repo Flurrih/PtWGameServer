@@ -64,10 +64,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Client\ClientData.cs" />
+    <Compile Include="Managers\LoginManager.cs" />
+    <Compile Include="Networking\IPacket.cs" />
+    <Compile Include="Networking\PacketHandler.cs" />
+    <Compile Include="Networking\Packets\InitialPacket.cs" />
+    <Compile Include="Networking\Packets\LoginPacket.cs" />
+    <Compile Include="Networking\ServerSocket.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="ServerPackets\Headers\Headers.cs" />
+    <Compile Include="Networking\Packets\Headers\Headers.cs" />
     <Compile Include="ServerPackets\LoginPackets\LoginPackets.cs" />
-    <Compile Include="ServerPackets\PacketIO.cs" />
+    <Compile Include="Networking\PacketIO.cs" />
     <Compile Include="ServerPackets\PacketManagers\PacketManager.cs" />
     <Compile Include="ServerPackets\PlayerPackets\PlayerPackets.cs" />
     <Page Include="MainWindow.xaml">
@@ -114,7 +120,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Visual Studio 2015\Projects\SocksLib\SocksLib\SocksLib.csproj">
+      <Project>{7ecf3c50-19bc-42d9-912f-7a0ffdb07004}</Project>
+      <Name>SocksLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

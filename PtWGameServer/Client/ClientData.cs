@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocksLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -8,26 +9,15 @@ using System.Threading.Tasks;
 
 namespace PtWGameServer.Client
 {
-    public partial class ClientData
+    public class ClientData
     {
-        public Socket clientSocket;
-        public Thread clientThread;
-        public string token;
+        public Socket socket { get; private set; }
+        public string token { get; private set; }
 
-        public ClientData()
+        public ClientData(Socket socket, string token)
         {
-            token = Guid.NewGuid().ToString();
-            clientThread = new Thread(Server.Data_IN);
-            clientThread.Start(clientSocket);
-            SendConnectionPacket();
-        }
-        public ClientData(Socket clientSocket)
-        {
-            this.clientSocket = clientSocket;
-            token = Guid.NewGuid().ToString();
-            clientThread = new Thread(Server.Data_IN);
-            clientThread.Start(clientSocket);
-            SendConnectionPacket();
+            this.socket = socket;
+            this.token = token;
         }
     }
 }
