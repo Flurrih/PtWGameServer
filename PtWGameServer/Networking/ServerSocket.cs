@@ -24,7 +24,7 @@ namespace PtWGameServer.Networking
 
         public void Bind(int port)
         {
-            _socket.Bind(new IPEndPoint(IPAddress.Parse("192.168.0.105"), port));
+            _socket.Bind(new IPEndPoint(IPAddress.Parse(GetIPAddress()), port));
         }
 
         public void Listen(int backlog)
@@ -74,6 +74,19 @@ namespace PtWGameServer.Networking
             }
 
 
+        }
+
+        public static string GetIPAddress()
+        {
+            IPAddress[] ips = Dns.GetHostAddresses(Dns.GetHostName());
+
+            foreach (IPAddress i in ips)
+            {
+                if (i.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    return i.ToString();
+            }
+
+            return "127.0.0.1";
         }
 
     }

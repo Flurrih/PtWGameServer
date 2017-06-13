@@ -23,7 +23,7 @@ namespace PtWGameServer
             isRunning = false;
             _clients = new Dictionary<string, Socket>();
             ServerSocket = new ServerSocket(this);
-            ServerSocket.Bind(6556);
+            ServerSocket.Bind(8888);
             ServerSocket.Listen(500);
             ServerSocket.Accept();
 

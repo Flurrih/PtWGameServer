@@ -33,10 +33,10 @@ namespace PtWGameServer.Database
             //connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             //database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
-            server = "sql8.freemysqlhosting.net";
-            database = "sql8159840";
-            uid = "sql8159840";
-            password = "QHHaAAFB3V";
+            server = "eu-cdbr-azure-north-e.cloudapp.net";
+            database = "pathtowonderland";
+            uid = "ba78d9e57c4356";
+            password = "159d087e";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
